@@ -13,6 +13,10 @@ public class Portatil extends  Ordenador{
         this.peso = peso;
     }
 
+    public double getPeso() {
+        return peso;
+    }
+
     public void setPeso(double peso) {
         this.peso = peso;
     }
