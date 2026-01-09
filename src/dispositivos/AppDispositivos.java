@@ -44,10 +44,14 @@ public class AppDispositivos {
             }
         }
 
+        System.out.println("\n-::LISTA DE ORDENADORES ENCENDIDOS::-");
+        contadorLista = 1;
         for (Ordenador o: emp1.getOrdenadores()){
             if (o != null){
                 if (o.nombre.matches("PC[0-9]{1,2}")){
                     o.encender();
+                    System.out.println("Ordenador [" + contadorLista + "] encendido");
+                    contadorLista++;
                 }
             }
         }
@@ -82,8 +86,7 @@ public class AppDispositivos {
         }
 
         for (int i = 0; i < emp1.getOrdenadores().length; i++){
-            Portatil nuevoPC = (Portatil) emp1.getOrdenadores()[i];
-            if (emp1.getOrdenadores()[i] != null && emp1.getOrdenadores()[i] == nuevoPC){
+            if (emp1.getOrdenadores()[i] != null && emp1.getOrdenadores()[i].ram == 16){
                 emp1.getOrdenadores()[i].setRam(2048);
             }
         }
