@@ -12,9 +12,9 @@ public class Camara {
     }
 
     public String escribir() {
-        return "-::CAMARA::-" +
-                "\nAPERTURA: " + apertura +
-                "\nMEGAPIXELES: " + megapixeles +
-                "\nMARCA: " + marca;
+        return "\n\t-::CAMARA::-" +
+                "\n\tAPERTURA: " + apertura +
+                "\n\tMEGAPIXELES: " + megapixeles +
+                "\n\tARCA: " + marca;
     }
 }

@@ -21,6 +21,7 @@ public class Portatil extends  Ordenador{
         this.peso = peso;
     }
 
+    @Override
     public String escribir(){
         return super.escribir() + "\nPESO: " + peso;
     }
