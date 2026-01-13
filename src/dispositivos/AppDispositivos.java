@@ -60,7 +60,7 @@ public class AppDispositivos {
         listar(emp1);
 
         for (int i = 0; i < emp1.getOrdenadores().length; i++){
-            if (emp1.getOrdenadores()[i] != null && emp1.getOrdenadores()[i].ram == 16){
+            if (emp1.getOrdenadores()[i] instanceof Portatil){
                 emp1.getOrdenadores()[i].setRam(2048);
                 System.out.println("\n-" + emp1.getOrdenadores()[i].escribir() + "\n");
             }
