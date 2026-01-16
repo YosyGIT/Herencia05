@@ -19,6 +19,11 @@ public class Servidor implements IPable{
 
     }
 
+    /**
+     * Metodos getters and setters
+     * @return get devuelve el tipo
+     * set cambia su valor
+     */
     public int getTipo() {
         return tipo;
     }
@@ -40,24 +45,5 @@ public class Servidor implements IPable{
     @Override
     public IPable obtenerRed() {
         return null;
-    }
-
-    @Override
-    public int obtenerBinarioInt(String binario) {
-        int bin;
-        if (binario.matches("[10]+")){
-            bin = Integer.parseInt(binario);
-            return bin;
-        }
-        return -1;
-    }
-
-    @Override
-    public String obtenerBin(int entero) {
-        String bin = String.valueOf(entero);
-        if (bin.matches("[10]+")){
-            return bin;
-        }
-        return "";
     }
 }
