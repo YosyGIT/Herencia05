@@ -1,6 +1,6 @@
 package servidores;
 
-public class UtilBin {
+public class UtilBin{
     /*
     public static int obtenerBinario2(String binario){
         int bin;
@@ -35,10 +35,37 @@ public class UtilBin {
     }
 
     public static String obtenerBin(int entero){
-        String resultado;
-        while(entero != 0){
-
+        int resto;
+        String binarioRev = "";
+        String binarioFin = "";
+        if(entero > 0) {
+            while (entero > 0){
+                resto = entero % 2;
+                binarioRev += resto;
+                entero /= 2;
+            }
+            for (int i = binarioRev.length() - 1; i >= 0; i--){
+                binarioFin += binarioRev.charAt(i);
+            }
+            return binarioFin;
         }
-        return "";
+        else{
+            return "-1";
+        }
+
     }
+
+    public static String obtenerBinario8 (int numero){
+        String binario = obtenerBin(numero);
+        if (binario.isEmpty() || binario.length() > 8){
+            return "-1";
+        }else{
+            String ceros = "";
+            for (int i = 0; i <= 8 - binario.length(); i++){
+                ceros += "0";
+            }
+            return ceros + binario;
+        }
+    }
+
 }
