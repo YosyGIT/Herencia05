@@ -68,4 +68,8 @@ public class UtilBin{
         }
     }
 
+    public static boolean confirmarIp(int ip1, int ip2, int ip3, int ip4){
+        return (ip1 >= 0 && ip1 <= 255) && (ip2 >= 0 && ip2 <= 255) &&
+                (ip3 >= 0 && ip3 <= 255) && (ip4 >= 0 && ip4 <= 255);
+    }
 }
