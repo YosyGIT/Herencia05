@@ -84,11 +84,13 @@ public class Red implements IPable{
     }
 
     public boolean unir(Ordenador o){
-        for (int i = 0; i < ordenadores.length; i++){
-            if (ordenadores[i] == null){
-                ordenadores[i] = o;
-                nOrdenadores++;
-                return true;
+        if (comprobarOrd(o)){
+            for (int i = 0; i < ordenadores.length; i++){
+                if (ordenadores[i] == null){
+                    ordenadores[i] = o;
+                    nOrdenadores++;
+                    return true;
+                }
             }
         }
         return false;
@@ -125,5 +127,16 @@ public class Red implements IPable{
 
     public void asignarServidor(Servidor servidor){
         this.servidor = servidor;
+    }
+
+    public boolean comprobarOrd(Ordenador o){
+        for (Ordenador ord : this.ordenadores){
+            if(o != null){
+                if (o.equals(ord)){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
