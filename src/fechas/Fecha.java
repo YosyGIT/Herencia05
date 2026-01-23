@@ -1,9 +1,8 @@
 package fechas;
 import java.time.*;
-import java.time.chrono.ChronoLocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.*;
-public class Fecha {
+public class Fecha implements Comparable<Fecha>{
     private LocalDate fecha;
 
     public Fecha(){
@@ -47,12 +46,13 @@ public class Fecha {
         long p = ChronoUnit.YEARS.between(this.fecha, f.fecha);
         return p;
     }
-/**
-    public Comparable<Fecha> compareTo(Fecha f){
+
+    @Override
+    public int compareTo(Fecha f){
         Fecha f1 = f;
         if (this.fecha.equals(f)){
-            return f.fecha.compareTo(this.fecha);
+            return 1;
         }
-        return 0;
-    }*/
+        return -1;
+    }
 }
