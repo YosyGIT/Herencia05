@@ -21,7 +21,8 @@ public class AppFecha {
         int cont = 0;
         String opcion = "", texto = "";
         String[] fecha = new String[3];
-        Fecha fechaM = new Fecha();
+        int[] converF = new int[3];
+        Fecha fechaM = new Fecha(0,0,0);
 
         System.out.println("Formato para introducir las fechas (08/11/2001)");
         System.out.print("Introduce la fecha: ");
@@ -38,10 +39,11 @@ public class AppFecha {
                 texto = sc.nextLine().trim();
 
                 fecha = opcion.split("/");
-                fecha[0] = fecha[0].trim();
-                fecha[1] = fecha[1].trim();
-                fecha[2] = fecha[2].trim();
+                converF[0] = Integer.parseInt(fecha[0]);
+                converF[1] = Integer.parseInt(fecha[1]);
+                converF[2] = Integer.parseInt(fecha[2]);
 
+                Fecha f = new Fecha(converF[0], converF[1], converF[2]);
                 cont++;
             }else {
                 System.out.print("Formato erroneo, introduce otra fecha valida(xx/xx/xxxx): ");
