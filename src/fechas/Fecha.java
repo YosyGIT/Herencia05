@@ -49,10 +49,7 @@ public class Fecha implements Comparable<Fecha>{
 
     @Override
     public int compareTo(Fecha f){
-        Fecha f1 = f;
-        if (this.fecha.equals(f)){
-            return 1;
-        }
-        return -1;
+        if (f == null) return 1;
+        return this.fecha.compareTo(f.fecha);
     }
 }
