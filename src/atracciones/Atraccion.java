@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public abstract class Atraccion {
+public abstract class Atraccion implements Accesible{
     protected static int totalAtracciones = 0;
     protected String nombre;
     protected double precio;
@@ -104,9 +104,21 @@ public abstract class Atraccion {
         }
         return false;
     }
-/**
-    public static Duration calcularTiempoEspera(){
-        Duration d = Duration.between(LocalDate.now(), )
-        return 2.45;
-    }**/
+
+    public abstract Duration calcularTiempoEspera();
+
+    @Override
+    public abstract boolean cumpleRequisitos(Cliente c);
+
+    @Override
+    public abstract String getRequisitos();
+
+    @Override
+    public String toString(){
+        DateTimeFormatter d = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return "NOMBRE DE LA ATRACCION: [" + this.nombre + "], PRECIO: " + this.precio + "€" +
+                "\nTECNICO MANTENIMIENTO: " + (this.t!=null?this.getNombre():"Ninguno") +
+                ", FECHA ULTIMO MANTENIMIENTO: " + (this.fechaUltimoMantenimiento!=null?this.fechaUltimoMantenimiento.format(d):"Ninguna");
+    }
+
 }
