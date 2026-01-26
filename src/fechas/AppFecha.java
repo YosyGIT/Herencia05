@@ -34,7 +34,7 @@ public class AppFecha {
                 opcion = sc.nextLine().trim();
             }
 
-            if(texto.matches("^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[012])/\\d{4}$")){
+            if(texto.matches("^(0[1-9]|[1-9]|[12][0-9]|3[01])/(0[1-9]|[1-9]|1[012])/\\d{4}$")){
                 System.out.print("Introduce la fecha: ");
                 texto = sc.nextLine().trim();
 
