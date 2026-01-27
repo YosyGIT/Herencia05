@@ -10,6 +10,10 @@ public class TecnicoMantenimiento extends Persona{
         this.fechaAntiguedad = fechaAntiguedad;
     }
 
+    public String getNombre(){
+        return super.getNombre();
+    }
+
     public LocalDate getFechaAntiguedad(){
         return this.fechaAntiguedad;
     }
