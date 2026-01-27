@@ -68,7 +68,6 @@ public class AppAtracciones {
                     if (opcionAtraccion.matches("[1]")){
                         mostrarInformacionAtracciones(montana);
                         System.out.println("\nClientes en cola: ");
-                        contCola = montana.getContCola();
                         listarClientes(montana);
                     }else if (opcionAtraccion.matches("[2]")){
                         mostrarInformacionAtracciones(carrusel);
