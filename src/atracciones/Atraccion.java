@@ -53,6 +53,14 @@ public abstract class Atraccion implements Accesible{
         this.t = t;
     }
 
+    public Cliente[] getCola(){
+        return this.cola;
+    }
+
+    public int getContCola(){
+        return this.contCola;
+    }
+
     public LocalDateTime getFechaUltimoMantenimiento(){
         return this.fechaUltimoMantenimiento;
     }
@@ -115,7 +123,7 @@ public abstract class Atraccion implements Accesible{
 
     @Override
     public String toString(){
-        DateTimeFormatter d = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter d = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         return "NOMBRE DE LA ATRACCION: [" + this.nombre + "], PRECIO: " + this.precio + "€" +
                 "\nTECNICO MANTENIMIENTO: " + (this.t!=null?this.getNombre():"Ninguno") +
                 ", FECHA ULTIMO MANTENIMIENTO: " + (this.fechaUltimoMantenimiento!=null?this.fechaUltimoMantenimiento.format(d):"Ninguna");

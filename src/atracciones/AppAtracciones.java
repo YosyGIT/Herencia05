@@ -1,17 +1,20 @@
 package atracciones;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 public class AppAtracciones {
     private static TecnicoMantenimiento[] listTecnicos = new TecnicoMantenimiento[5];
-    private static Cliente[] listCliente = new Cliente[100];
     private static int contadorClientes = 0;
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        Carrusel carrusel;
-        MontanaRusa montana;
-        int opcionNum;
-        String opcion = "";
+        Carrusel carrusel  = new Carrusel("Carrusel infantil", 2.5);
+        MontanaRusa montana = new  MontanaRusa("Montana Rusa Extrema", 5);
+        TecnicoMantenimiento tec;
+        Cliente cliente;
+        int opcionNum, contCola;
+        String opcion = "", opcionAtraccion = "";
 
         while(!opcion.matches("[8]")){
             System.out.println("\t\tMENU PRINCIPAL");
@@ -42,9 +45,78 @@ public class AppAtracciones {
                 break;
 
                 case 3:
-                    /**
-                    asignarTecnico(sc, (Atraccion) Carrusel);**/
+                    opcionAtraccion = listarAtracciones(sc);
+                    tec = listarTecnicos(sc);
+                    if (opcionAtraccion.matches("[1]")){
+                        asignarAtraccion(opcionAtraccion, tec, montana);
+                    }else if (opcionAtraccion.matches("[2]")){
+                        asignarAtraccion(opcionAtraccion, tec, carrusel);
+                    }
                 break;
+
+                case 4:
+                    opcionAtraccion = listarAtracciones(sc);
+                    if (opcionAtraccion.matches("[1]")){
+                        hacerMantenimiento(sc, montana);
+                    }else if (opcionAtraccion.matches("[2]")){
+                        hacerMantenimiento(sc, carrusel);
+                    }
+                break;
+
+                case 5:
+                    opcionAtraccion = listarAtracciones(sc);
+                    if (opcionAtraccion.matches("[1]")){
+                        mostrarInformacionAtracciones(montana);
+                        System.out.println("\nClientes en cola: ");
+                        contCola = montana.getContCola();
+                        listarClientes(montana);
+                    }else if (opcionAtraccion.matches("[2]")){
+                        mostrarInformacionAtracciones(carrusel);
+                        System.out.println("\nClientes en cola: ");
+                        listarClientes(carrusel);
+                    }
+                break;
+
+                case 6:
+                    opcionAtraccion = listarAtracciones(sc);
+                    if (opcionAtraccion.matches("[1]")){
+                        cliente = listarClientes(sc, montana);
+                        if (!montana.yaEstaEnCola(cliente) && cliente.getEdad() >= 12 && cliente.getAltura() >= 1.4){
+                            montana.anadirClienteCola(cliente);
+                        }else {
+                            System.out.println("El cliente no cumple con los requisitos.");
+                        }
+
+                    } else if (opcionAtraccion.matches("[2]")) {
+                        cliente = listarClientes(sc, carrusel);
+                        if (!carrusel.yaEstaEnCola(cliente) && cliente.getEdad() >= 3){
+                            montana.anadirClienteCola(cliente);
+                        }else {
+                            System.out.println("El cliente no cumple con los requisitos.");
+                        }
+                    }
+                break;
+
+                case 7:
+                    opcionAtraccion = listarAtracciones(sc);
+                    if (opcionAtraccion.matches("[1]")){
+                        cliente = listarClientes(sc, montana);
+                        if (montana.yaEstaEnCola(cliente)){
+                            montana.quitarClienteCola(cliente);
+                            System.out.println("Se ha quitado correctamente de la cola.");
+                        }else {
+                            System.out.println("El cliente no se encuentra en la cola de esta atracción.");
+                        }
+                    } else if (opcionAtraccion.matches("[2]")) {
+                        cliente = listarClientes(sc, carrusel);
+                        if (!carrusel.yaEstaEnCola(cliente)){
+                            carrusel.quitarClienteCola(cliente);
+                            System.out.println("Se ha quitado correctamente de la cola.");
+                        }else {
+                            System.out.println("El cliente no se encuentra en la cola de esta atracción.");
+                        }
+                    }
+                    break;
             }
         }
     }
@@ -56,33 +128,37 @@ public class AppAtracciones {
         int anio, mes, dia;
         double alt;
 
-        System.out.print("-Ingrese el nombre del cliente: ");
-        nombre = sc.nextLine().trim();
+        if(contadorClientes < 100){
+            System.out.print("-Ingrese el nombre del cliente: ");
+            nombre = sc.nextLine().trim();
 
-        System.out.print("-Ingrese el fecha de nacimiento del cliente (xx/xx/xxxx): ");
-        fechaNacimiento = sc.nextLine().trim();
-        while(!fechaNacimiento.matches("^([1-9]|0[1-9]|[12][1-9]|3[01])/(1[012]|0[1-9]|[1-9])/\\d{4}$")){
-            System.out.print("\n::ERROR:: Formato erroneo \n-Introduce la decha de nacimiento del cliente (xx/xx/xxxx): ");
+            System.out.print("-Ingrese el fecha de nacimiento del cliente (xx/xx/xxxx): ");
             fechaNacimiento = sc.nextLine().trim();
-        }
-        digitos = fechaNacimiento.split("/");
-        anio = Integer.parseInt(digitos[2]);
-        mes = Integer.parseInt(digitos[1]);
-        dia = Integer.parseInt(digitos[0]);
-        fecha = LocalDate.of(anio, mes,dia);
+            while(!fechaNacimiento.matches("^([1-9]|0[1-9]|[12][1-9]|3[01])/(1[012]|0[1-9]|[1-9])/\\d{4}$")){
+                System.out.print("\n::ERROR:: Formato erroneo \n-Introduce la decha de nacimiento del cliente (xx/xx/xxxx): ");
+                fechaNacimiento = sc.nextLine().trim();
+            }
+            digitos = fechaNacimiento.split("/");
+            anio = Integer.parseInt(digitos[2]);
+            mes = Integer.parseInt(digitos[1]);
+            dia = Integer.parseInt(digitos[0]);
+            fecha = LocalDate.of(anio, mes,dia);
 
-        System.out.print("-Introduce la altura del cliente: ");
-        altura = sc.nextLine().trim();
-        while (!altura.matches("[A-ZÑa-zñ]+")){
-            System.out.print("\n::ERROR:: Formato erroneo \n-Introduce la altura del cliente: ");
+            System.out.print("-Introduce la altura del cliente: ");
             altura = sc.nextLine().trim();
-        }
-        alt = Double.parseDouble(altura);
+            while (!altura.matches("[A-ZÑa-zñ]+")){
+                System.out.print("\n::ERROR:: Formato erroneo \n-Introduce la altura del cliente: ");
+                altura = sc.nextLine().trim();
+            }
+            alt = Double.parseDouble(altura);
 
-        Cliente c = new Cliente(nombre,fecha, alt);
-        contadorClientes++;
-        System.out.println("-::Cliente creado correctamente::-" +
-                "\n" + c.toString());
+            Cliente c = new Cliente(nombre,fecha, alt);
+            contadorClientes++;
+            System.out.println("-::Cliente creado correctamente::-" +
+                    "\n" + c.toString());
+        }else {
+            System.out.println("La lista de clientes esta completa");
+        }
     }
 
     public static void crearTecnico(Scanner sc){
@@ -97,7 +173,7 @@ public class AppAtracciones {
         System.out.print("-Ingrese el fecha de nacimiento del cliente (xx/xx/xxxx): ");
         fechaAntiguedad = sc.nextLine().trim();
         while(!fechaAntiguedad.matches("^([1-9]|0[1-9]|[12][1-9]|3[01])/(1[012]|0[1-9]|[1-9])/\\d{4}$")){
-            System.out.print("\n::ERROR:: Formato erroneo \n-Introduce la decha de nacimiento del cliente (xx/xx/xxxx): ");
+            System.out.print("\n::ERROR:: Formato erroneo \n-Introduce la decha de nacimiento del tecnico (xx/xx/xxxx): ");
             fechaAntiguedad = sc.nextLine().trim();
         }
         digitos = fechaAntiguedad.split("/");
@@ -111,9 +187,24 @@ public class AppAtracciones {
                 "\n" + t.toString());
     }
 
-    public static void asignarTecnico(Scanner sc, Atraccion a){
+    public static void asignarAtraccion(String opcion, TecnicoMantenimiento t, Atraccion a){
+        if (opcion.matches("[1]")){
+            a.setT(t);
+        } else if (opcion.matches("[2]")) {
+            a.setT(t);
+        }
+    }
+
+    public static void asignarAtraccion(String opcion, Cliente c, Atraccion carrusel, Atraccion montana){
+        if (opcion.matches("[1]")){
+            carrusel.anadirClienteCola(c);
+        } else if (opcion.matches("[2]")) {
+            montana.anadirClienteCola(c);
+        }
+    }
+
+    public static String listarAtracciones(Scanner sc){
         String opcion;
-        TecnicoMantenimiento tecnico;
 
         System.out.println("Seleccione la atracción" +
                 "\n1) Montaña Rusa Extrema" +
@@ -126,23 +217,7 @@ public class AppAtracciones {
             opcion = sc.nextLine().trim();
         }
 
-        asignarAtraccion(opcion, listarTecnicos(sc), a);
-    }
-
-    public static void asignarAtraccion(String opcion, TecnicoMantenimiento t, Atraccion a){
-        if (opcion.matches("[1]")){
-            a.setT(t);
-        } else if (opcion.matches("[2]")) {
-            a.setT(t);
-        }
-    }
-
-    public void asignarAtraccion(String opcion, Cliente c, Atraccion a, Atraccion a2){
-        if (opcion.matches("[1]")){
-
-        } else if (opcion.matches("[2]")) {
-
-        }
+        return opcion;
     }
 
     public static TecnicoMantenimiento listarTecnicos(Scanner sc){
@@ -150,7 +225,7 @@ public class AppAtracciones {
 
         for (int i = 0; i < listTecnicos.length; i++){
             if (listTecnicos[i] != null){
-                System.out.println(cont + listTecnicos[i].toString());
+                System.out.println(cont + ") " + listTecnicos[i].toString());
                 cont++;
             }
         }
@@ -158,5 +233,50 @@ public class AppAtracciones {
         opcion = sc.nextInt();
 
         return listTecnicos[opcion - 1];
+    }
+
+    public static void listarClientes(Atraccion a){
+        int cont = 1;
+        if (a.getContCola() != 0){
+            for (Cliente c : a.getCola()){
+                if (c != null){
+                    System.out.println(cont + ") " + c.toString());
+                    cont++;
+                }
+            }
+        }else {
+            System.out.println("No hay clientes a la espera");
+        }
+
+    }
+
+    public static Cliente listarClientes(Scanner sc, Atraccion a){
+        int cont = 1, opcion;
+        for (Cliente c : a.getCola()){
+            if (c != null){
+                System.out.println(cont + ") " + c.toString());
+                cont++;
+            }
+        }
+        System.out.println("Elije un cliente marcando el numero que tiene delante de la palabra cliente [x) CLIENTE]: ");
+        opcion = sc.nextInt();
+        return a.getCola()[opcion - 1];
+    }
+
+    public static void hacerMantenimiento(Scanner sc, Atraccion a){
+        if (a.getT()!=null){
+            LocalDateTime fecha = LocalDateTime.now();
+            a.setFechaUltimoMantenimiento(fecha);
+            DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+            System.out.println("Tecnico responsable: " + a.getT().toString() +
+                    "\nFecha de Mantenimiento: " + a.getFechaUltimoMantenimiento().format(formato));
+        }else {
+            System.out.println("No hay tecnicos agregados para esta atracción.");
+        }
+
+    }
+
+    public static String mostrarInformacionAtracciones(Atraccion a){
+        return a.toString();
     }
 }
