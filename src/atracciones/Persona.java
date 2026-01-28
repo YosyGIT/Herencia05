@@ -17,6 +17,6 @@ public class Persona {
 
     @Override
     public String toString(){
-        return "NOMBRE: [" + this.nombre + "]";
+        return "[" + this.nombre + "]";
     }
 }

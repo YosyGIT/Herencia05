@@ -70,18 +70,11 @@ public abstract class Atraccion implements Accesible{
     }
 
     public void anadirClienteCola(Cliente c){
-        int cont = 0;
-        for (Cliente cola: cola){
-            if (cola != null && cola == c){
-                cont++;
-            }
-        }
-        if (cont == 0){
-            for (int i = 0;  i < cola.length; i++){
-                if (c != null){
-                    cola[i] = c;
-                    contCola ++;
-                }
+        for (int i = 0;  i < cola.length; i++){
+            if (c != null){
+                cola[i] = c;
+                contCola ++;
+                break;
             }
         }
     }

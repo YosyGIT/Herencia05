@@ -37,7 +37,7 @@ public class Cliente extends Persona{
     @Override
     public String toString(){
         DateTimeFormatter f = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        return "CLIENTE [" + nombre + "]" +
+        return "CLIENTE [" + super.toString() + "]" +
                 "\n-FECHA DE NACIMIENTO: " + fechaNacimiento.format(f) + "| EDAD: " + getEdad() + " años" +
                 "\n-ALTURA: " + altura + "m";
     }

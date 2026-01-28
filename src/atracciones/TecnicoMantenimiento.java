@@ -25,7 +25,7 @@ public class TecnicoMantenimiento extends Persona{
     @Override
     public String toString(){
         DateTimeFormatter f = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        return super.toString() +
+        return "TECNICO/A [" + super.toString() + "]" +
                 "\nFECHA DE ANTIGÜEDAD: " + this.fechaAntiguedad.format(f);
     }
 }
