@@ -20,7 +20,7 @@ public class Prueba {
                 System.out.print("\nIntroduce un numero de nuevo: ");
                 opcion= sc.nextInt();
             }catch (Exception e){
-                System.out.println("Valor mal introducido otra vez");
+                System.out.println("Valor mal introducido otra vez: [" + e + "]");
             }
         }
 
